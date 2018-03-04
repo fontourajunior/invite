@@ -1,3 +1,4 @@
-language: kotlin
-rvm:
- - oraclejdk8 --install --binary --fuzzy
+language: java
+
+jdk:
+  - oraclejdk8
