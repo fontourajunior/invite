@@ -2,7 +2,6 @@ package br.com.invite.commons
 
 import com.fasterxml.jackson.annotation.JsonValue
 import java.io.Serializable
-import kotlin.math.min
 
 @TypesafeValid(min = 5, max = 50)
 class Name : Serializable, TypesafeModel<String> {
