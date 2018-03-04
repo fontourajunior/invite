@@ -1,0 +1,8 @@
+CREATE TABLE IF NOT EXISTS public.user (
+  id SERIAL NOT NULL,
+  name VARCHAR(50) NOT NULL,
+  phone FLOAT NOT NULL,
+  password VARCHAR(30) NOT NULL,
+  created_at TIMESTAMP NOT NULL,
+  updated_at TIMESTAMP,
+  PRIMARY KEY (id));

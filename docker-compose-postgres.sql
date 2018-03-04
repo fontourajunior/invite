@@ -1,0 +1,1 @@
+alter database invite OWNER TO invite;
