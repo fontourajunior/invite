@@ -1,8 +1,8 @@
 package br.com.invite.resource
 
 import br.com.invite.domain.user.User
-import br.com.invite.domain.request.CreateUserRequest
-import br.com.invite.domain.request.UpdateUserRequest
+import br.com.invite.resource.request.CreateUserRequest
+import br.com.invite.resource.request.UpdateUserRequest
 import br.com.invite.service.UserService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus.CREATED
@@ -24,15 +24,15 @@ data class UserController @Autowired constructor(private val userService: UserSe
 
     @ResponseStatus(CREATED)
     @PostMapping(consumes = [APPLICATION_JSON_VALUE])
-    fun create(@Valid @RequestBody createUser: CreateUserRequest) {
-        userService.save(createUser)
+    fun create(@Valid @RequestBody createUser: CreateUserRequest): User {
+        return userService.save(createUser)
     }
 
-    @ResponseStatus(CREATED)
+    @ResponseStatus(OK)
     @PutMapping(path = ["{id}"], consumes = [APPLICATION_JSON_VALUE])
     fun update(@PathVariable id: Long,
-               @RequestBody createUser: UpdateUserRequest) {
-        userService.update(id, createUser)
+               @RequestBody createUser: UpdateUserRequest): User {
+        return userService.update(id, createUser)
     }
 
     @ResponseStatus(OK)

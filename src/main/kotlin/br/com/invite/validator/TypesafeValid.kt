@@ -1,4 +1,4 @@
-package br.com.invite.commons
+package br.com.invite.validator
 
 
 import java.lang.annotation.Documented
@@ -13,6 +13,9 @@ import kotlin.annotation.AnnotationTarget.TYPE
 import kotlin.properties.Delegates
 import kotlin.reflect.KClass
 
+interface TypesafeModel<T> {
+    abstract fun getDefaultValue(): T
+}
 
 @Target(TYPE, ANNOTATION_CLASS, CLASS)
 @Retention(RUNTIME)

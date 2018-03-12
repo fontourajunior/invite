@@ -7,40 +7,38 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonValue
 import java.io.Serializable
 
-@TypesafeValid
-class Name : Serializable, TypesafeModel<String> {
+@TypesafeValid(min = 5, max = 30)
+class Phone : Serializable, TypesafeModel<Long> {
 
-    lateinit var name: String private set
+    var phone: Long = 0
 
-    private constructor(name: String) {
-        this.name = name
+    private constructor(phone: Long) {
+        this.phone = phone
     }
 
     private constructor()
 
     @JsonValue
-    override fun getDefaultValue(): String = this.name
+    override fun getDefaultValue(): Long = this.phone
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as Name
+        other as Phone
 
-        if (name != other.name) return false
+        if (phone != other.phone) return false
 
         return true
     }
 
     override fun hashCode(): Int {
-        return name.hashCode()
+        return phone.hashCode()
     }
-
-    override fun toString(): String = name
 
     companion object {
         @JsonCreator
         @JvmStatic
-        fun of(@JsonProperty("name") name: String)= Name(name)
+        fun of(@JsonProperty("phone") phone: Long)= Phone(phone)
     }
 }
