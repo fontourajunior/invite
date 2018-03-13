@@ -8,6 +8,7 @@ import br.com.invite.resource.request.UpdateUserRequest
 import br.com.invite.validator.UserValidator
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import java.util.*
 
 interface UserService {
     fun save(createUser: CreateUserRequest): User
@@ -22,13 +23,14 @@ class UserServiceImpl @Autowired constructor(private val userRepository: UserRep
 
     override fun save(createUserRequest: CreateUserRequest): User {
         userValidator.validateCreateUser(createUserRequest.name)
-        return User.save(userRepository, createUserRequest.name, createUserRequest.phone, createUserRequest.password)
+        return createUserRequest.toEntity().also { it.id = Random().nextLong() }.save(userRepository)
     }
 
-    override fun update(id: Long, updateUserRequest: UpdateUserRequest): User {
-        val userRestored = userRepository.findById(id).get() ?: throw NotFoundException()
-        return userRestored.update(userRepository, updateUserRequest.name, updateUserRequest.phone, updateUserRequest.password)
-    }
+    override fun update(id: Long, updateUserRequest: UpdateUserRequest): User =
+            updateUserRequest
+                    .toEntity()
+                    .also { it.id = id }
+                    .update(userRepository)
 
     override fun findOne(id: Long): User {
         return userRepository.findById(id).get() ?: throw NotFoundException()
@@ -41,5 +43,11 @@ class UserServiceImpl @Autowired constructor(private val userRepository: UserRep
         }
         return usersAll
     }
+
+    private fun CreateUserRequest.toEntity(): User =
+            User(name = name, phone = phone, password = password)
+
+    private fun UpdateUserRequest.toEntity(): User =
+            User(name = name, phone = phone, password = password)
 
 }

@@ -17,26 +17,12 @@ import javax.validation.constraints.NotNull
 
 @Entity
 @Table(name = "user", schema = "public")
-class User(@Id @GeneratedValue(strategy = GenerationType.IDENTITY) var id: Long = 0,
-           @Column @Embedded @NotNull var name: Name = Name.of(""),
-           @Column @Embedded @NotNull var phone: Phone = Phone.of(0),
-           @Column @Embedded @NotNull var password: Password = Password.of("")) : BaseEntity() {
+class User(@Embedded val name: Name, @Embedded val phone: Phone, @Embedded val password: Password) : BaseEntity<Long>() {
 
-    companion object {
-        fun save(userRepository: UserRepository, name: Name, phone: Phone, password: Password): User =
-            userRepository.save(User(name = name, phone = phone, password = password))
-    }
+    fun save(userRepository: UserRepository): User =
+            userRepository.save(this)
 
-    fun update(userRepository: UserRepository,
-               name: Name,
-               phone: Phone,
-               password: Password): User {
-
-        this.beforeUpdate()
-        this.name = name
-        this.phone = phone
-        this.password = password
-        return userRepository.save(this)
-    }
+    fun update(userRepository: UserRepository): User =
+        userRepository.save(this)
 
 }

@@ -1,5 +1,6 @@
 package br.com.invite.domain.core
 
+import org.springframework.data.jpa.domain.AbstractPersistable
 import org.springframework.util.Assert
 import java.io.Serializable
 import java.sql.Timestamp
@@ -11,22 +12,10 @@ import javax.persistence.PrePersist
 import javax.persistence.PreUpdate
 import javax.validation.constraints.NotNull
 
-@MappedSuperclass
-abstract class BaseEntity(@NotNull @Column private var createdAt: Timestamp = Timestamp.from(Instant.now()),
-                          @Column private var updatedAt: Timestamp? = null) : Serializable {
+abstract class BaseEntity<PK : Serializable> : AbstractPersistable<PK>() {
 
-    constructor() : this(createdAt = Timestamp.from(Instant.now()))
-
-    @PrePersist
-    fun beforePersist() {
-        if (this.createdAt == null) {
-            this.createdAt = Timestamp.from(Instant.now())
-        }
-    }
-
-    @PreUpdate
-    fun beforeUpdate() {
-        this.updatedAt = Timestamp.from(Instant.now())
+    public override fun setId(id: PK) {
+        super.setId(id)
     }
 
 }
