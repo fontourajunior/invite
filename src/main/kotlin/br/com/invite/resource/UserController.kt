@@ -20,7 +20,7 @@ import javax.validation.Valid
 
 @RestController
 @RequestMapping("/users")
-data class UserController @Autowired constructor(private val userService: UserService) {
+class UserController(private val userService: UserService) {
 
     @ResponseStatus(CREATED)
     @PostMapping(consumes = [APPLICATION_JSON_VALUE])

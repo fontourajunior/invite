@@ -26,12 +26,12 @@ class UserServiceImpl @Autowired constructor(private val userRepository: UserRep
     }
 
     override fun update(id: Long, updateUserRequest: UpdateUserRequest): User {
-        val userRestored = userRepository.findOne(id) ?: throw NotFoundException()
+        val userRestored = userRepository.findById(id).get() ?: throw NotFoundException()
         return userRestored.update(userRepository, updateUserRequest.name, updateUserRequest.phone, updateUserRequest.password)
     }
 
     override fun findOne(id: Long): User {
-        return userRepository.findOne(id) ?: throw NotFoundException()
+        return userRepository.findById(id).get() ?: throw NotFoundException()
     }
 
     override fun findAll(): List<User> {
