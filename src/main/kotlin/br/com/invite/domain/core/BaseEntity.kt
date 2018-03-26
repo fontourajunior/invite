@@ -1,27 +1,28 @@
 package br.com.invite.domain.core
 
-import org.springframework.util.Assert
+import org.springframework.data.jpa.domain.AbstractPersistable
 import java.io.Serializable
 import java.sql.Timestamp
 import java.time.Instant
-import java.time.LocalDateTime
-import javax.persistence.Column
 import javax.persistence.MappedSuperclass
 import javax.persistence.PrePersist
 import javax.persistence.PreUpdate
-import javax.validation.constraints.NotNull
+
 
 @MappedSuperclass
-abstract class BaseEntity(@NotNull @Column private var createdAt: Timestamp = Timestamp.from(Instant.now()),
-                          @Column private var updatedAt: Timestamp? = null) : Serializable {
+abstract class BaseEntity<PK : Serializable> : AbstractPersistable<PK>() {
 
-    constructor() : this(createdAt = Timestamp.from(Instant.now()))
+    public override fun setId(id: PK) {
+        super.setId(id)
+    }
+
+    private lateinit var createdAt: Timestamp
+    private lateinit var updatedAt: Timestamp
+
 
     @PrePersist
     fun beforePersist() {
-        if (this.createdAt == null) {
-            this.createdAt = Timestamp.from(Instant.now())
-        }
+        this.createdAt = Timestamp.from(Instant.now())
     }
 
     @PreUpdate

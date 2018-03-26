@@ -1,6 +1,7 @@
 package br.com.invite.resource
 
 import br.com.invite.domain.user.User
+import br.com.invite.resource.representation.UserRepresentation
 import br.com.invite.resource.request.CreateUserRequest
 import br.com.invite.resource.request.UpdateUserRequest
 import br.com.invite.service.UserService
@@ -20,28 +21,28 @@ import javax.validation.Valid
 
 @RestController
 @RequestMapping("/users")
-data class UserController @Autowired constructor(private val userService: UserService) {
+class UserController(private val userService: UserService) {
 
     @ResponseStatus(CREATED)
     @PostMapping(consumes = [APPLICATION_JSON_VALUE])
-    fun create(@Valid @RequestBody createUser: CreateUserRequest): User {
+    fun create(@Valid @RequestBody createUser: CreateUserRequest): UserRepresentation {
         return userService.save(createUser)
     }
 
     @ResponseStatus(OK)
     @PutMapping(path = ["{id}"], consumes = [APPLICATION_JSON_VALUE])
     fun update(@PathVariable id: Long,
-               @RequestBody createUser: UpdateUserRequest): User {
+               @RequestBody createUser: UpdateUserRequest): UserRepresentation {
         return userService.update(id, createUser)
     }
 
     @ResponseStatus(OK)
     @GetMapping("{id}")
-    fun findOne(@PathVariable id: Long) = userService.findOne(id)
+    fun findOne(@PathVariable id: Long) : UserRepresentation = userService.findOne(id)
 
     @ResponseStatus(OK)
     @GetMapping
-    fun findAll(): List<User> = userService.findAll()
+    fun findAll(): List<UserRepresentation> = userService.findAll()
 
 
 }

@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service
 interface UserValidator {
 
     fun validateCreateUser(name: Name)
+    fun validateUpdatedUser(name: Name)
+
 
 }
 
@@ -16,11 +18,13 @@ interface UserValidator {
 class UserValidatorImpl @Autowired constructor(private val userRepository: UserRepository) : UserValidator {
 
     override fun validateCreateUser(name: Name) {
-
         if (userRepository.countUserByName(name) > 0) {
             throw BusinessException("Duplicated Name.")
         }
+    }
 
+    override fun validateUpdatedUser(name: Name) {
+        validateCreateUser(name)
     }
 
 }
