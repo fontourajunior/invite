@@ -1,18 +1,16 @@
 package br.com.invite.commons
 
-import br.com.invite.validator.TypesafeModel
-import br.com.invite.validator.TypesafeValid
-import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonProperty
+import br.com.invite.validator.CustomModel
+import br.com.invite.validator.CustomValidation
 import com.fasterxml.jackson.annotation.JsonValue
 import java.io.Serializable
 
-@TypesafeValid(min = 5, max = 30)
-class Phone : Serializable, TypesafeModel<Long> {
+@CustomValidation(min = 5, max = 30)
+class Phone : Serializable, CustomModel<Long> {
 
     var phone: Long = 0
 
-    private constructor(phone: Long) {
+    constructor(phone: Long) {
         this.phone = phone
     }
 
@@ -36,9 +34,5 @@ class Phone : Serializable, TypesafeModel<Long> {
         return phone.hashCode()
     }
 
-    companion object {
-        @JsonCreator
-        @JvmStatic
-        fun of(@JsonProperty("phone") phone: Long)= Phone(phone)
-    }
+
 }

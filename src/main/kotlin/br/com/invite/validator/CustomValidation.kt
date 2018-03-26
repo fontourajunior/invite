@@ -13,23 +13,23 @@ import kotlin.annotation.AnnotationTarget.TYPE
 import kotlin.properties.Delegates
 import kotlin.reflect.KClass
 
-interface TypesafeModel<T> {
+interface CustomModel<T> {
     abstract fun getDefaultValue(): T
 }
 
 @Target(TYPE, ANNOTATION_CLASS, CLASS)
 @Retention(RUNTIME)
-@Constraint(validatedBy = [TypesafeValidator::class])
+@Constraint(validatedBy = [CustomValidator::class])
 @Documented
-annotation class TypesafeValid(val min: Int = 0,
-                               val max: Int = Int.MAX_VALUE,
-                               val message: String = "",
-                               val groups: Array<KClass<*>> = arrayOf(),
-                               val payload: Array<KClass<out Payload>> = arrayOf())
+annotation class CustomValidation(val min: Int = 0,
+                                  val max: Int = Int.MAX_VALUE,
+                                  val message: String = "",
+                                  val groups: Array<KClass<*>> = arrayOf(),
+                                  val payload: Array<KClass<out Payload>> = arrayOf())
 
 
 
-class TypesafeValidator : ConstraintValidator<TypesafeValid, TypesafeModel<*>> {
+class CustomValidator : ConstraintValidator<CustomValidation, CustomModel<*>> {
 
     private var min: Int by Delegates.notNull<Int>()
     private var max: Int by Delegates.notNull<Int>()
@@ -39,16 +39,16 @@ class TypesafeValidator : ConstraintValidator<TypesafeValid, TypesafeModel<*>> {
     private val MAX_SIZE = Int.MAX_VALUE
 
 
-    override fun initialize(annotation: TypesafeValid) {
+    override fun initialize(annotation: CustomValidation) {
         min = annotation.min
         max = annotation.max
         message = annotation.message
     }
 
-    override fun isValid(typesafe: TypesafeModel<*>, context: ConstraintValidatorContext): Boolean {
+    override fun isValid(custom: CustomModel<*>, context: ConstraintValidatorContext): Boolean {
         context.disableDefaultConstraintViolation()
 
-        val value = typesafe.getDefaultValue()
+        val value = custom.getDefaultValue()
 
         if (!validateNotNull(value, context)) {
             return false
