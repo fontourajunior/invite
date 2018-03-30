@@ -3,6 +3,7 @@ package br.com.invite.resource
 import br.com.invite.domain.user.User
 import br.com.invite.resource.representation.UserRepresentation
 import br.com.invite.resource.request.CreateUserRequest
+import br.com.invite.resource.request.TestRequest
 import br.com.invite.resource.request.UpdateUserRequest
 import br.com.invite.service.UserService
 import org.springframework.beans.factory.annotation.Autowired
@@ -22,6 +23,13 @@ import javax.validation.Valid
 @RestController
 @RequestMapping("/users")
 class UserController(private val userService: UserService) {
+
+
+    @ResponseStatus(CREATED)
+    @PostMapping("/test", consumes = [APPLICATION_JSON_VALUE])
+    fun test(@Valid @RequestBody test: TestRequest): TestRequest {
+        return test
+    }
 
     @ResponseStatus(CREATED)
     @PostMapping(consumes = [APPLICATION_JSON_VALUE])

@@ -4,7 +4,7 @@ import br.com.invite.validator.CustomModel
 import br.com.invite.validator.CustomValidation
 import com.fasterxml.jackson.annotation.JsonValue
 
-@CustomValidation
+@CustomValidation(min=8)
 class Name : CustomModel<String> {
 
     lateinit var name: String private set
