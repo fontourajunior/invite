@@ -1,6 +1,4 @@
-# Invite  [![Build Status](https://travis-ci.org/fontourajunior/invite.svg?branch=master)](https://travis-ci.org/fontourajunior/invite)
-
-[![Coverage Status](https://coveralls.io/repos/github/fontourajunior/invite/badge.svg?branch=master)](https://coveralls.io/github/fontourajunior/invite?branch=master)
+# Invite  [![Build Status](https://travis-ci.org/fontourajunior/invite.svg?branch=master)](https://travis-ci.org/fontourajunior/invite) [![Coverage Status](https://coveralls.io/repos/github/fontourajunior/invite/badge.svg?branch=master)](https://coveralls.io/github/fontourajunior/invite?branch=master)
 
 Este é um projeto que visa o desenvolvimento de uma API, com intuito de criar um App, de um convite de eventos privados. O mesmo conta com as seguintes tecnologias para desenvolvimento:
 
