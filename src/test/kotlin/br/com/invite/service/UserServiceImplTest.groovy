@@ -26,23 +26,23 @@ class UserServiceImplTest extends Specification {
     def "should find one user for id"() {
 
         given:
-        def userOne = repository.save(new User(new Name("Qui-Gon Jinn"), new Phone(9955855776), new Password("Senh@")))
+        def userOne = repository.save(new User(new Name("Qui-Gon Jinn"), new Phone("349955855776"), new Password("Senh@123")))
 
         when:
         def userFound = userService.findOne(userOne.id)
 
         then:
         assert userFound != null
-        assert userFound.name == new Name("Qui-Gon Jinn")
-        assert userFound.phone == new Phone(9955855776)
+        assert userFound.name == "Qui-Gon Jinn"
+        assert userFound.phone == "349955855776"
 
     }
 
     def "FindAll"() {
         given:
-        repository.save(new User(new Name("Qui-Gon Jinn"), new Phone(9955855776), new Password("Senh@")))
-        repository.save(new User(new Name("Obi-Wan Kenobi"), new Phone(8855855776), new Password("Senh@")))
-        repository.save(new User(new Name("Yoda"), new Phone(774455776), new Password("Senh@")))
+        repository.save(new User(new Name("Qui-Gon Jinn"), new Phone("349955855776"), new Password("Senh@123")))
+        repository.save(new User(new Name("Obi-Wan Kenobi"), new Phone("348855855776"), new Password("Senh@123")))
+        repository.save(new User(new Name("Yoda"), new Phone("34774455776"), new Password("Senh@123")))
 
         when:
         def users = userService.findAll()

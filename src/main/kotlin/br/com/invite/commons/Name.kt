@@ -1,40 +1,17 @@
 package br.com.invite.commons
 
-import br.com.invite.validator.CustomModel
-import br.com.invite.validator.CustomValidation
-import com.fasterxml.jackson.annotation.JsonValue
+import br.com.invite.utils.EmbeddedEntity
+import br.com.invite.validator.Validator.validate
+import javax.validation.Valid
+import javax.validation.constraints.NotBlank
+import javax.validation.constraints.NotEmpty
+import javax.validation.constraints.NotNull
 
-@CustomValidation(min=8)
-class Name : CustomModel<String> {
+@EmbeddedEntity
+data class Name(@field:[Valid NotNull NotBlank] val name: String) {
 
-    lateinit var name: String private set
-
-    constructor(name: String) {
-        this.name = name
-    }
-
-    private constructor()
-
-    @JsonValue
-    override fun getDefaultValue(): String = this.name
-
-
-
-    override fun toString(): String = name
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as Name
-
-        if (name != other.name) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        return name.hashCode()
+    init {
+        validate(this)
     }
 
 }

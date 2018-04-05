@@ -43,7 +43,7 @@ class UserControllerTest extends Specification {
 
     def "Create"() {
         given:
-        CreateUserRequest userRequest = new CreateUserRequest(new Name("Anakin Skywalker"), new Phone(2398855776), new Password("Senh@"))
+        CreateUserRequest userRequest = new CreateUserRequest("Anakin Skywalker", "342398855776", "Senh@123")
         def jsonContent = new JsonBuilder(userRequest).toPrettyString()
 
         when:
@@ -55,13 +55,13 @@ class UserControllerTest extends Specification {
         then:
         content.id == 1
         content.name == "Anakin Skywalker"
-        content.phone == 2398855776
+        content.phone == "342398855776"
     }
 
     def "Update"() {
         given:
-        def userCreated = userRepository.save(new User(new Name("Qui-Gon Jinn"), new Phone(9955855776), new Password("Senh@")))
-        CreateUserRequest userRequest = new CreateUserRequest(new Name("Lord Dukan"), new Phone(22223333), new Password("new SenAlt&rada"))
+        def userCreated = userRepository.save(new User(new Name("Qui-Gon Jinn"), new Phone("349955855776"), new Password("Senh@123")))
+        CreateUserRequest userRequest = new CreateUserRequest("Lord Dukan", "3422223333", "SenAlt&rada")
         def jsonContent = new JsonBuilder(userRequest).toPrettyString()
 
         when:
@@ -73,12 +73,12 @@ class UserControllerTest extends Specification {
         then:
         content.id == userCreated.id
         content.name == "Lord Dukan"
-        content.phone == 22223333
+        content.phone == "3422223333"
     }
 
     def "FindOne"() {
         given:
-        def userCreated = userRepository.save(new User(new Name("Qui-Gon Jinn"), new Phone(9955855776), new Password("Senh@")))
+        def userCreated = userRepository.save(new User(new Name("Qui-Gon Jinn"), new Phone("349955855776"), new Password("Senh@123")))
 
         when:
         def response = mockMvc.perform(get('/users/{id}', userCreated.id))
@@ -89,14 +89,14 @@ class UserControllerTest extends Specification {
         then:
         content.id == userCreated.id
         content.name == "Qui-Gon Jinn"
-        content.phone == 9955855776
+        content.phone == "349955855776"
     }
 
     def "FindAll"() {
         given:
-        def userOne = userRepository.save(new User(new Name("Qui-Gon Jinn"), new Phone(9955855776), new Password("Senh@")))
-        def userTwo = userRepository.save(new User(new Name("Obi-Wan Kenobi"), new Phone(8855855776), new Password("Senh@")))
-        def userThree = userRepository.save(new User(new Name("Yoda"), new Phone(774455776), new Password("Senh@")))
+        def userOne = userRepository.save(new User(new Name("Qui-Gon Jinn"), new Phone("349955855776"), new Password("Senh@123")))
+        def userTwo = userRepository.save(new User(new Name("Obi-Wan Kenobi"), new Phone("348855855776"), new Password("Senh@123")))
+        def userThree = userRepository.save(new User(new Name("Yoda"), new Phone("34774455776"), new Password("Senh@123")))
 
         when:
         def response = mockMvc.perform(get('/users'))
@@ -109,14 +109,14 @@ class UserControllerTest extends Specification {
 
         content[0].id == userOne.id
         content[0].name == "Qui-Gon Jinn"
-        content[0].phone == 9955855776
+        content[0].phone == "349955855776"
 
         content[1].id == userTwo.id
         content[1].name == "Obi-Wan Kenobi"
-        content[1].phone == 8855855776
+        content[1].phone == "348855855776"
 
         content[2].id == userThree.id
         content[2].name == "Yoda"
-        content[2].phone == 774455776
+        content[2].phone == "34774455776"
     }
 }

@@ -7,47 +7,16 @@ import javax.validation.MessageInterpolator
 import javax.validation.Validation
 import javax.validation.Validator
 
-object ValidationUtil {
-    private val validator: Validator
-
-    private val messageInterpolator: MessageInterpolator
-
-    init {
-        messageInterpolator = LocaleAwareMessageInterpolator()
-
-        validator = Validation.byDefaultProvider()
-                .configure()
-                .messageInterpolator(messageInterpolator)
-                .buildValidatorFactory()
-                .validator
+object Validator {
+    val validator: Validator by lazy {
+        Validation.buildDefaultValidatorFactory().validator
     }
 
-    fun <T> validate(value: T) {
-        val validate = validator.validate(value)
+    fun <T> validate(instance: T){
+        val validate = validator.validate(instance)
 
         if (!validate.isEmpty()) {
             throw ConstraintViolationException(validate)
         }
-    }
-
-}
-
-
-class LocaleAwareMessageInterpolator : ResourceBundleMessageInterpolator() {
-
-    private var defaultLocale = Locale.getDefault()
-
-    fun setDefaultLocale(defaultLocale: Locale) {
-        this.defaultLocale = defaultLocale
-    }
-
-    override fun interpolate(messageTemplate: String,
-                             context: MessageInterpolator.Context): String {
-        return interpolate(messageTemplate, context, defaultLocale)
-    }
-
-    override fun interpolate(messageTemplate: String,
-                             context: MessageInterpolator.Context, locale: Locale): String {
-        return super.interpolate(messageTemplate, context, locale)
     }
 }

@@ -24,8 +24,7 @@ class User(@Embedded var name: Name, @Embedded var phone: Phone, @Embedded var p
                validator: UserValidator,
                name: Name,
                phone: Phone,
-               password:
-               Password): User {
+               password: Password): User {
 
         validator.validateUpdatedUser(name)
 
