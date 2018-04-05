@@ -10,15 +10,14 @@ import javax.persistence.PreUpdate
 
 
 @MappedSuperclass
-abstract class BaseEntity<PK : Serializable> : AbstractPersistable<PK>() {
+data class BaseEntity<PK : Serializable>(
+        var createdAt: Timestamp = Timestamp.from(Instant.now())) : AbstractPersistable<PK>() {
+
+    lateinit var updatedAt: Timestamp
 
     public override fun setId(id: PK) {
         super.setId(id)
     }
-
-    private lateinit var createdAt: Timestamp
-    private lateinit var updatedAt: Timestamp
-
 
     @PrePersist
     fun beforePersist() {

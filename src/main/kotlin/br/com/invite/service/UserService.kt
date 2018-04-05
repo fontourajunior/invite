@@ -1,5 +1,8 @@
 package br.com.invite.service
 
+import br.com.invite.commons.Name
+import br.com.invite.commons.Password
+import br.com.invite.commons.Phone
 import br.com.invite.domain.user.User
 import br.com.invite.exception.NotFoundException
 import br.com.invite.repository.UserRepository
@@ -16,38 +19,39 @@ interface UserService {
     fun update(id: Long, createUser: UpdateUserRequest): UserRepresentation
 }
 
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 @Service
 class UserServiceImpl(private val userRepository: UserRepository,
-                                             private val userValidator: UserValidator) : UserService {
+                      private val userValidator: UserValidator) : UserService {
 
-    override fun save(createUserRequest: CreateUserRequest): UserRepresentation =
-        modelToRepresentation(createUserRequest.toEntity().save(userRepository, userValidator))
+    override fun save(createUser: CreateUserRequest): UserRepresentation =
+            modelToRepresentation(createUser.toEntity().save(userRepository, userValidator))
 
-    override fun update(id: Long, updateUserRequest: UpdateUserRequest): UserRepresentation {
+    override fun update(id: Long, createUser: UpdateUserRequest): UserRepresentation {
         val userUpdated = findById(id).update(userRepository,
                                               userValidator,
-                                              updateUserRequest.name,
-                                              updateUserRequest.phone,
-                                              updateUserRequest.password)
+                                              Name(createUser.name),
+                                              Phone(createUser.phone),
+                                              Password(createUser.password))
         return modelToRepresentation(userUpdated)
     }
 
     override fun findOne(id: Long): UserRepresentation =
-        modelToRepresentation(findById(id))
+            modelToRepresentation(findById(id))
 
     override fun findAll(): List<UserRepresentation> {
         val usersAll = userRepository.findAll()
-        if(usersAll.isEmpty()) {
+        if (usersAll.isEmpty()) {
             throw NotFoundException()
         }
         return usersAll.map { modelToRepresentation(it) }
     }
 
     private fun CreateUserRequest.toEntity(): User =
-            User(name = name, phone = phone, password = password)
+            User(name = Name(name), phone = Phone(phone), password = Password(password))
 
-    private fun modelToRepresentation(user: User) : UserRepresentation =
-            UserRepresentation(user.id, user.name, user.phone)
+    private fun modelToRepresentation(user: User): UserRepresentation =
+            UserRepresentation(user.id, user.name.name, user.phone.phone)
 
     private fun findById(id: Long): User {
         return userRepository.findById(id).orElseThrow(::NotFoundException)

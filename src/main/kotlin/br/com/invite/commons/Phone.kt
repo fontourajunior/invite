@@ -1,38 +1,16 @@
 package br.com.invite.commons
 
-import br.com.invite.validator.CustomModel
-import br.com.invite.validator.CustomValidation
-import com.fasterxml.jackson.annotation.JsonValue
-import java.io.Serializable
+import br.com.invite.utils.EmbeddedEntity
+import br.com.invite.validator.Validator.validate
+import javax.validation.constraints.NotBlank
+import javax.validation.constraints.NotNull
+import javax.validation.constraints.Pattern
+import javax.validation.constraints.Size
 
-@CustomValidation(min = 5, max = 30)
-class Phone : Serializable, CustomModel<Long> {
+@EmbeddedEntity
+data class Phone(@field:[NotNull NotBlank Size(min = 10, max = 14) Pattern(message = "Informe apenas números", regexp = "^[0-9]{1,45}\$")] val phone: String) {
 
-    var phone: Long = 0
-
-    constructor(phone: Long) {
-        this.phone = phone
+    init {
+        validate(this)
     }
-
-    private constructor()
-
-    @JsonValue
-    override fun getDefaultValue(): Long = this.phone
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as Phone
-
-        if (phone != other.phone) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        return phone.hashCode()
-    }
-
-
 }

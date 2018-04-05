@@ -1,39 +1,16 @@
 package br.com.invite.commons
 
-import br.com.invite.validator.CustomModel
-import br.com.invite.validator.CustomValidation
-import com.fasterxml.jackson.annotation.JsonValue
+import br.com.invite.utils.EmbeddedEntity
+import br.com.invite.validator.Validator.validate
+import javax.validation.constraints.NotBlank
+import javax.validation.constraints.NotNull
+import javax.validation.constraints.Size
 
-@CustomValidation
-class Password : CustomModel<String> {
+@EmbeddedEntity
+data class Password(@field:[NotNull NotBlank Size(min = 6, max = 20)] val password: String) {
 
-    lateinit var password: String private set
-
-    constructor(password: String) {
-        this.password = password
+    init {
+        validate(this)
     }
-
-    private constructor()
-
-    @JsonValue
-    override fun getDefaultValue(): String = this.password
-
-    override fun toString(): String = password
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as Password
-
-        if (password != other.password) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        return password.hashCode()
-    }
-
 
 }

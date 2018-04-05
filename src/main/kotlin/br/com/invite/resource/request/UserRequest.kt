@@ -1,11 +1,16 @@
 package br.com.invite.resource.request
 
-import br.com.invite.commons.Name
-import br.com.invite.commons.Password
-import br.com.invite.commons.Phone
 import javax.validation.Valid
+import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
+import javax.validation.constraints.Pattern
+import javax.validation.constraints.Size
 
-data class CreateUserRequest(@field:[Valid NotNull] val name: Name, @field:[Valid NotNull] val phone: Phone, @field:[Valid NotNull] val password: Password)
+data class CreateUserRequest(@field:[Valid NotNull NotBlank] val name: String,
+                             @field:[Valid NotNull NotBlank Size(min = 10, max = 14) Pattern(message = "Informe apenas números", regexp = "^[0-9]{1,45}\$")] val phone: String,
+                             @field:[Valid NotNull NotBlank] val password: String)
 
-data class UpdateUserRequest(val name: Name, val phone: Phone, val password: Password)
+data class UpdateUserRequest(@field:[Valid NotNull NotBlank] val name: String,
+                             @field:[Valid NotNull NotBlank Size(min = 10, max = 14) Pattern(message = "Informe apenas números", regexp = "^[0-9]{1,45}\$")] val phone: String,
+                             @field:[Valid NotNull NotBlank] val password: String)
+

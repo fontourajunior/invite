@@ -28,9 +28,9 @@ class UserTest extends Specification {
     def "should to save a new user"() {
 
         given:
-        def name = new Name("Name")
-        def phone = new Phone(324989328)
-        def password = new Password("asdf")
+        def name = new Name("Homer Simpson")
+        def phone = new Phone("34324989328")
+        def password = new Password("password123")
         def userToSave = new User(name, phone, password)
 
         when:
@@ -46,8 +46,8 @@ class UserTest extends Specification {
 
     def "should throw a Business Exception of duplicated name when to save"() {
         given:
-        def userOne = new User(new Name("Name"), new Phone(324989328), new Password("asdf"))
-        def userTwo = new User(new Name("Name"), new Phone(324989328), new Password("asdf"))
+        def userOne = new User(new Name("Bart Simpson"), new Phone("34324989328"), new Password("password123"))
+        def userTwo = new User(new Name("Bart Simpson"), new Phone("34324989328"), new Password("password123"))
 
         when:
         userOne.save(repository, validator)
@@ -66,28 +66,28 @@ class UserTest extends Specification {
         def userCreated = user.save(repository, validator)
         def userUpdated = userCreated.update(repository,
                 validator,
-                new Name("Name Updated"),
-                new Phone(999444885),
+                new Name("Homer"),
+                new Phone("34999444885"),
                 new Password("#updated"))
 
         then:
         assert userUpdated != null
-        assert userUpdated.name == new Name("Name Updated")
-        assert userUpdated.phone == new Phone(999444885)
+        assert userUpdated.name == new Name("Homer")
+        assert userUpdated.phone == new Phone("34999444885")
         assert userUpdated.password == new Password("#updated")
 
     }
 
     def "should throw a Business Exception of duplicated name when to update"() {
         given:
-        def userOne = new User(new Name("Name"), new Phone(324989328), new Password("asdf"))
-        def userTwo = new User(new Name("Name 2"), new Phone(324989328), new Password("asdf"))
+        def userOne = new User(new Name("Homer Simpson"), new Phone("34324989328"), new Password("senha123"))
+        def userTwo = new User(new Name("Marge Simpson"), new Phone("34324989328"), new Password("senha123"))
 
         when:
         userOne.save(repository, validator)
         def userSaved = userTwo.save(repository, validator)
 
-        userSaved.update(repository, validator, new Name("Name"), new Phone(324989328), new Password("asdf"))
+        userSaved.update(repository, validator, new Name("Homer Simpson"), new Phone("34324989328"), new Password("senha123"))
 
 
         then:
@@ -95,9 +95,9 @@ class UserTest extends Specification {
     }
 
     private def buildUser = {
-        def name = new Name("Name")
-        def phone = new Phone(324989328)
-        def password = new Password("asdf")
+        def name = new Name("Bart Simpson")
+        def phone = new Phone("34324989328")
+        def password = new Password("password123")
         return new User(name, phone, password)
     }
 }
