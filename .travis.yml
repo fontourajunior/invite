@@ -1,10 +1,4 @@
 language: java
 
-addons:
-  sonarcloud:
-    organization: "fontourajunior-github"
-    token:
-      secure: "f2499f955d91f9e4f0bbc941aff4326ce05ff8c6"
-
 jdk:
   - oraclejdk8
