@@ -3,6 +3,7 @@ package br.com.invite.service
 import br.com.invite.commons.Name
 import br.com.invite.commons.Password
 import br.com.invite.commons.Phone
+import br.com.invite.domain.event.Event
 import br.com.invite.domain.user.User
 import br.com.invite.repository.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
@@ -26,7 +27,7 @@ class UserServiceImplTest extends Specification {
     def "should find one user for id"() {
 
         given:
-        def userOne = repository.save(new User(new Name("Qui-Gon Jinn"), new Phone("349955855776"), new Password("Senh@123")))
+        def userOne = repository.save(new User(new Name("Qui-Gon Jinn"), new Phone("349955855776"), new Password("Senh@123"), new ArrayList<Event>()))
 
         when:
         def userFound = userService.findOne(userOne.id)
@@ -40,9 +41,9 @@ class UserServiceImplTest extends Specification {
 
     def "FindAll"() {
         given:
-        repository.save(new User(new Name("Qui-Gon Jinn"), new Phone("349955855776"), new Password("Senh@123")))
-        repository.save(new User(new Name("Obi-Wan Kenobi"), new Phone("348855855776"), new Password("Senh@123")))
-        repository.save(new User(new Name("Yoda"), new Phone("34774455776"), new Password("Senh@123")))
+        repository.save(new User(new Name("Qui-Gon Jinn"), new Phone("349955855776"), new Password("Senh@123"), new ArrayList<Event>()))
+        repository.save(new User(new Name("Obi-Wan Kenobi"), new Phone("348855855776"), new Password("Senh@123"), new ArrayList<Event>()))
+        repository.save(new User(new Name("Yoda"), new Phone("34774455776"), new Password("Senh@123"), new ArrayList<Event>()))
 
         when:
         def users = userService.findAll()

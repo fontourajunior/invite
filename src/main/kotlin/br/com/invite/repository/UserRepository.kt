@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface UserRepository: JpaRepository<User, Long> {
 
-    fun countUserByName
-            (name: Name): Int
+    fun countUserByName(name: Name): Long
 
 }

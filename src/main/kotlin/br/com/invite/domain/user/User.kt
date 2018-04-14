@@ -12,17 +12,21 @@ import javax.persistence.Embedded
 import javax.persistence.Entity
 import javax.persistence.FetchType
 import javax.persistence.OneToMany
+import javax.persistence.SequenceGenerator
 import javax.persistence.Table
 
 @Entity
 @Table(name = "user", schema = "public")
 class User(@Embedded var name: Name,
-           @Embedded var phone: Phone,
-           @Embedded var password: Password,
-           @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = [(CascadeType.ALL)])
-           var events: MutableList<br.com.invite.domain.event.Event> = ArrayList()
 
-          ) : BaseEntity<Long>() {
+           @Embedded var phone: Phone,
+
+           @Embedded var password: Password,
+
+           @OneToMany(mappedBy = "user",
+                      fetch = FetchType.EAGER,
+                      cascade = [(CascadeType.ALL)])
+           var events: MutableList<Event> = ArrayList()) : BaseEntity() {
 
     fun save(userRepository: UserRepository, validator: UserValidator): User {
         validator.validateCreateUser(this.name)

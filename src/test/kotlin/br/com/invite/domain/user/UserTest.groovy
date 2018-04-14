@@ -3,6 +3,7 @@ package br.com.invite.domain.user
 import br.com.invite.commons.Name
 import br.com.invite.commons.Password
 import br.com.invite.commons.Phone
+import br.com.invite.domain.event.Event
 import br.com.invite.exception.BusinessException
 import br.com.invite.repository.UserRepository
 import br.com.invite.validator.UserValidator
@@ -25,20 +26,26 @@ class UserTest extends Specification {
     @Autowired
     UserValidator validator
 
+    private def List<Event> events
+
+    def setup() {
+        events = new ArrayList()
+    }
+
     def "should to save a new user"() {
 
         given:
         def name = new Name("Homer Simpson")
         def phone = new Phone("34324989328")
         def password = new Password("password123")
-        def userToSave = new User(name, phone, password)
+        def userToSave = new User(name, phone, password, events)
 
         when:
         def userCreated = userToSave.save(repository, validator)
 
         then:
         assert userCreated != null
-        assert userCreated.name == name
+        assert userCreated.name == new Name("Homer Simpson1")
         assert userCreated.phone == phone
         assert userCreated.password == password
 
@@ -46,8 +53,8 @@ class UserTest extends Specification {
 
     def "should throw a Business Exception of duplicated name when to save"() {
         given:
-        def userOne = new User(new Name("Bart Simpson"), new Phone("34324989328"), new Password("password123"))
-        def userTwo = new User(new Name("Bart Simpson"), new Phone("34324989328"), new Password("password123"))
+        def userOne = new User(new Name("Bart Simpson"), new Phone("34324989328"), new Password("password123"), events)
+        def userTwo = new User(new Name("Bart Simpson"), new Phone("34324989328"), new Password("password123"), events)
 
         when:
         userOne.save(repository, validator)
@@ -80,8 +87,8 @@ class UserTest extends Specification {
 
     def "should throw a Business Exception of duplicated name when to update"() {
         given:
-        def userOne = new User(new Name("Homer Simpson"), new Phone("34324989328"), new Password("senha123"))
-        def userTwo = new User(new Name("Marge Simpson"), new Phone("34324989328"), new Password("senha123"))
+        def userOne = new User(new Name("Homer Simpson"), new Phone("34324989328"), new Password("senha123"), events)
+        def userTwo = new User(new Name("Marge Simpson"), new Phone("34324989328"), new Password("senha123"), events)
 
         when:
         userOne.save(repository, validator)
@@ -98,6 +105,6 @@ class UserTest extends Specification {
         def name = new Name("Bart Simpson")
         def phone = new Phone("34324989328")
         def password = new Password("password123")
-        return new User(name, phone, password)
+        return new User(name, phone, password, events)
     }
 }
