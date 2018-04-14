@@ -3,6 +3,7 @@ package br.com.invite.resource
 import br.com.invite.commons.Name
 import br.com.invite.commons.Password
 import br.com.invite.commons.Phone
+import br.com.invite.domain.event.Event
 import br.com.invite.domain.user.User
 import br.com.invite.repository.UserRepository
 import br.com.invite.resource.request.CreateUserRequest
@@ -60,7 +61,7 @@ class UserControllerTest extends Specification {
 
     def "Update"() {
         given:
-        def userCreated = userRepository.save(new User(new Name("Qui-Gon Jinn"), new Phone("349955855776"), new Password("Senh@123")))
+        def userCreated = userRepository.save(new User(new Name("Qui-Gon Jinn"), new Phone("349955855776"), new Password("Senh@123"), new ArrayList<Event>()))
         CreateUserRequest userRequest = new CreateUserRequest("Lord Dukan", "3422223333", "SenAlt&rada")
         def jsonContent = new JsonBuilder(userRequest).toPrettyString()
 
@@ -78,7 +79,7 @@ class UserControllerTest extends Specification {
 
     def "FindOne"() {
         given:
-        def userCreated = userRepository.save(new User(new Name("Qui-Gon Jinn"), new Phone("349955855776"), new Password("Senh@123")))
+        def userCreated = userRepository.save(new User(new Name("Qui-Gon Jinn"), new Phone("349955855776"), new Password("Senh@123"), new ArrayList<Event>()))
 
         when:
         def response = mockMvc.perform(get('/users/{id}', userCreated.id))
@@ -94,9 +95,9 @@ class UserControllerTest extends Specification {
 
     def "FindAll"() {
         given:
-        def userOne = userRepository.save(new User(new Name("Qui-Gon Jinn"), new Phone("349955855776"), new Password("Senh@123")))
-        def userTwo = userRepository.save(new User(new Name("Obi-Wan Kenobi"), new Phone("348855855776"), new Password("Senh@123")))
-        def userThree = userRepository.save(new User(new Name("Yoda"), new Phone("34774455776"), new Password("Senh@123")))
+        def userOne = userRepository.save(new User(new Name("Qui-Gon Jinn"), new Phone("349955855776"), new Password("Senh@123"), new ArrayList<Event>()))
+        def userTwo = userRepository.save(new User(new Name("Obi-Wan Kenobi"), new Phone("348855855776"), new Password("Senh@123"), new ArrayList<Event>()))
+        def userThree = userRepository.save(new User(new Name("Yoda"), new Phone("34774455776"), new Password("Senh@123"), new ArrayList<Event>()))
 
         when:
         def response = mockMvc.perform(get('/users'))

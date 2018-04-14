@@ -7,11 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 interface UserValidator {
-
     fun validateCreateUser(name: Name)
     fun validateUpdatedUser(name: Name)
-
-
 }
 
 @Service
