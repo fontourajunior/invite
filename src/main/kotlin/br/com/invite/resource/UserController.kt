@@ -4,6 +4,7 @@ import br.com.invite.resource.representation.UserRepresentation
 import br.com.invite.resource.request.CreateUserRequest
 import br.com.invite.resource.request.UpdateUserRequest
 import br.com.invite.service.UserService
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus.CREATED
 import org.springframework.http.HttpStatus.OK
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
@@ -19,7 +20,7 @@ import javax.validation.Valid
 
 @RestController
 @RequestMapping("/users")
-class UserController(private val userService: UserService) {
+class UserController @Autowired constructor(private val userService: UserService) {
 
     @ResponseStatus(CREATED)
     @PostMapping(consumes = [APPLICATION_JSON_VALUE])

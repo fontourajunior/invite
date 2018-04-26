@@ -3,6 +3,7 @@ package br.com.invite.validator
 import br.com.invite.commons.Name
 import br.com.invite.exception.BusinessException
 import br.com.invite.repository.UserRepository
+import br.com.invite.utils.Messages
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -16,7 +17,7 @@ class UserValidatorImpl @Autowired constructor(private val userRepository: UserR
 
     override fun validateCreateUser(name: Name) {
         if (userRepository.countUserByName(name) > 0) {
-            throw BusinessException("Duplicated Name.")
+            throw BusinessException(Messages.DUPLICATED_NAME)
         }
     }
 
