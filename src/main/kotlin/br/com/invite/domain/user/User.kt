@@ -18,11 +18,8 @@ import javax.persistence.Table
 @Entity
 @Table(name = "user", schema = "public")
 class User(@Embedded var name: Name,
-
            @Embedded var phone: Phone,
-
            @Embedded var password: Password,
-
            @OneToMany(mappedBy = "user",
                       fetch = FetchType.EAGER,
                       cascade = [(CascadeType.ALL)])

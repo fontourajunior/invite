@@ -70,7 +70,6 @@ class EventControllerTest extends Specification {
         def content = new JsonSlurper().parseText(response.contentAsString)
 
         then:
-        content.userId == 1
         content.name == "Anakin Skywalker"
         content.description == "Event description"
         content.indConfirmPresence == true
@@ -89,7 +88,7 @@ class EventControllerTest extends Specification {
         def content = new JsonSlurper().parseText(response.contentAsString)
 
         then:
-        content.userId == 1
+        content.userId == user.id
         content.name == "Event Name Updated"
         content.description == "Event description"
         content.indConfirmPresence == false
@@ -107,7 +106,7 @@ class EventControllerTest extends Specification {
         def content = new JsonSlurper().parseText(response.contentAsString)
 
         then:
-        content.userId == 1
+        content.userId == user.id
         content.name == "Event Name"
         content.description == "Event description"
         content.indConfirmPresence == true
@@ -125,12 +124,12 @@ class EventControllerTest extends Specification {
         def content = new JsonSlurper().parseText(response.contentAsString)
 
         then:
-        content[0].userId == 1
+        content[0].userId == user.id
         content[0].name == "Event One"
         content[0].description == "Event one description"
         content[0].indConfirmPresence == true
 
-        content[1].userId == 1
+        content[1].userId == user.id
         content[1].name == "Event Two"
         content[1].description == "Event two description"
         content[1].indConfirmPresence == false

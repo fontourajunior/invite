@@ -45,7 +45,7 @@ class UserTest extends Specification {
 
         then:
         assert userCreated != null
-        assert userCreated.name == new Name("Homer Simpson1")
+        assert userCreated.name == new Name("Homer Simpson")
         assert userCreated.phone == phone
         assert userCreated.password == password
 

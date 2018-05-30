@@ -54,7 +54,6 @@ class UserControllerTest extends Specification {
         def content = new JsonSlurper().parseText(response.contentAsString)
 
         then:
-        content.id == 1
         content.name == "Anakin Skywalker"
         content.phone == "342398855776"
     }

@@ -6,6 +6,7 @@ import br.com.invite.resource.request.CreateEventRequest
 import br.com.invite.resource.request.UpdateEventRequest
 import br.com.invite.resource.request.UpdateUserRequest
 import br.com.invite.service.EventService
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.HttpStatus.*
 import org.springframework.http.MediaType
@@ -18,11 +19,12 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
+import java.util.*
 import javax.validation.Valid
 
 @RestController
 @RequestMapping("/events")
-class EventController(private val eventService: EventService) {
+class EventController @Autowired constructor(private val eventService: EventService) {
 
     @ResponseStatus(CREATED)
     @PostMapping(consumes = [APPLICATION_JSON_VALUE])
