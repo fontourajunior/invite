@@ -35,7 +35,7 @@ class EventTest extends Specification {
     @Autowired
     EventValidator validator
 
-    private def User user
+    private User user
 
     def setup() {
         user = userRepository.save(new User(new Name("Homer Simpson"),

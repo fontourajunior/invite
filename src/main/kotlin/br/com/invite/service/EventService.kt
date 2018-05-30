@@ -17,6 +17,7 @@ interface EventService {
     fun findOne(id: Long): EventRepresentation
     fun findAll(): List<EventRepresentation>
     fun update(id: Long, updateEvent: UpdateEventRequest): EventRepresentation
+    fun findById(id: Long): Event
 }
 
 @Service
@@ -45,7 +46,7 @@ class EventServiceImpl(private val eventRepository: EventRepository,
     override fun findAll(): List<EventRepresentation> =
             eventRepository.findAll().map { modelToEventRepresentation(it) }
 
-    private fun findById(id: Long): Event =
+    override fun findById(id: Long): Event =
             eventRepository.findById(id).orElseThrow(::NotFoundException)
 
     private fun findUserById(userId: Long) = userService.findById(userId)

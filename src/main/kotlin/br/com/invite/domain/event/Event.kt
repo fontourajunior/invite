@@ -18,18 +18,13 @@ import javax.validation.constraints.NotNull
 @Table(name = "event", schema = "public")
 class Event(@Embedded
             var name: Name,
-
             @Embedded
             var description: Description,
-
             @NotNull
             var date: Timestamp,
-
             @NotNull
             var indConfirmPresence: Boolean,
-
-            @ManyToOne
-            @JoinColumn(name = "user_id")
+            @ManyToOne @JoinColumn(name = "user_id")
             var user: User) : BaseEntity() {
 
 

@@ -47,11 +47,4 @@ class EventController @Autowired constructor(private val eventService: EventServ
     @GetMapping
     fun findAll(): List<EventRepresentation> = eventService.findAll()
 
-    @ResponseStatus(OK)
-    @GetMapping("/test")
-    fun test(): String {
-        val bundle = ResourceBundle.getBundle("locale/messages")
-        return bundle.getString("test")
-    }
-
 }

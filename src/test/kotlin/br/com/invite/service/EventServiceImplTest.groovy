@@ -8,7 +8,6 @@ import br.com.invite.domain.event.Event
 import br.com.invite.domain.user.User
 import br.com.invite.repository.EventRepository
 import br.com.invite.repository.UserRepository
-import br.com.invite.resource.EventController
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
@@ -17,8 +16,6 @@ import org.springframework.transaction.annotation.Transactional
 import spock.lang.Specification
 
 import java.sql.Timestamp
-
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup
 
 @SpringBootTest
 @ContextConfiguration
